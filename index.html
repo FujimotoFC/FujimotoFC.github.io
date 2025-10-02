@@ -1,17 +1,67 @@
-Add index.html for resume site
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>Elijah Little – Cloud & AI Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 900px; line-height: 1.6; }
+    h1, h2 { color: #2c3e50; }
+    header { border-bottom: 2px solid #ccc; margin-bottom: 2rem; padding-bottom: 1rem; }
+    nav a { margin-right: 1rem; text-decoration: none; color: #0077cc; }
+    nav a:hover { text-decoration: underline; }
+    .project { margin-bottom: 1.5rem; }
+    footer { margin-top: 3rem; font-size: 0.9em; color: #666; }
+  </style>
 </head>
 <body>
-  <h1>Elijah Little</h1>
-  <p>Active-duty Army (25B) | Transitioning into Cloud, Cybersecurity, and AI</p>
-  <h2>Projects</h2>
-  <ul>
-    <li>Cloud Resume Project (this site)</li>
-  </ul>
-  <p><a href="http://linkedin.com/in/elijah-little-672a0935a">LinkedIn</a> · <a href="https://github.com/YOUR-USERNAME">GitHub</a></p>
+  <header>
+    <h1>Elijah Little</h1>
+    <p>Active-Duty Army (25B – Information Technology Specialist) | Cybersecurity & Cloud Enthusiast | Exploring AI</p>
+    <nav>
+      <a href="http://linkedin.com/in/elijah-little-672a0935a" target="_blank">LinkedIn</a>
+      <a href="https://github.com/YOUR-USERNAME" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>About Me</h2>
+    <p>
+      I’m an IT Specialist in the U.S. Army with hands-on experience in networking, system administration,
+      and cybersecurity. Currently pursuing a B.S. in Cybersecurity Technology at UMGC, while preparing for
+      a transition into the civilian tech sector with a focus on <strong>cloud infrastructure</strong>
+      and <strong>AI integration</strong>.
+    </p>
+
+    <h2>Projects</h2>
+
+    <div class="project">
+      <h3>Cloud Resume Project</h3>
+      <p>
+        This website is my first step in building a cloud/AI-focused portfolio. Deployed initially using GitHub Pages,
+        I’ll be migrating it to AWS (S3 + CloudFront) and enhancing it with a serverless visitor counter
+        (AWS Lambda + DynamoDB).
+      </p>
+    </div>
+
+    <div class="project">
+      <h3>AI Chatbot (Coming Soon)</h3>
+      <p>
+        A cloud-hosted chatbot using AWS Lex / Azure Bot Service to demonstrate natural language processing integration.
+      </p>
+    </div>
+
+    <div class="project">
+      <h3>Image Recognition Web App (Planned)</h3>
+      <p>
+        Python + Flask app deployed in the cloud using AWS Rekognition to identify objects in uploaded images.
+      </p>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Elijah Little · Portfolio in Progress</p>
+  </footer>
 </body>
 </html>
