@@ -1,67 +1,1458 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>Elijah Little – Cloud & AI Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; max-width: 900px; line-height: 1.6; }
-    h1, h2 { color: #2c3e50; }
-    header { border-bottom: 2px solid #ccc; margin-bottom: 2rem; padding-bottom: 1rem; }
-    nav a { margin-right: 1rem; text-decoration: none; color: #0077cc; }
-    nav a:hover { text-decoration: underline; }
-    .project { margin-bottom: 1.5rem; }
-    footer { margin-top: 3rem; font-size: 0.9em; color: #666; }
+    :root {
+      --bg: #050816;
+      --bg-alt: #0b1020;
+      --card: #111827;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59, 130, 246, 0.15);
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.15);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+      --transition-fast: 180ms ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+    }
+
+    /* ─── Navbar ─────────────────────────────────────── */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.6), transparent);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .brand-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #60a5fa, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: white;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.7);
+    }
+
+    nav {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      position: relative;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.2rem;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, #60a5fa, #a855f7);
+      transition: width var(--transition-fast);
+      border-radius: 99px;
+    }
+
+    nav a:hover {
+      color: #f9fafb;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* ─── Hero ───────────────────────────────────────── */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.6fr);
+      gap: 2.5rem;
+      padding: 3.25rem 0 2.75rem;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.5rem, 4vw, 3.15rem);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.35), transparent 55%);
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-pill-dot {
+      height: 8px;
+      width: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+    }
+
+    .hero-subtitle {
+      color: var(--muted);
+      max-width: 32rem;
+      font-size: 0.95rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.7rem;
+    }
+
+    .hero-tag {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.6rem 1.15rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+      background: transparent;
+      color: var(--text);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      box-shadow: 0 18px 40px rgba(59, 130, 246, 0.55);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 22px 50px rgba(59, 130, 246, 0.75);
+    }
+
+    .btn-ghost {
+      border-color: var(--border-subtle);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 1);
+      transform: translateY(-1px);
+    }
+
+    .btn span.icon {
+      font-size: 1.1rem;
+    }
+
+    /* Right side hero "card" */
+
+    .hero-card {
+      background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.3), transparent 55%), var(--bg-alt);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 1.4rem 1.4rem 1.2rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .hero-status-pill {
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 0.72rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .hero-status-pill span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .stat-card {
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      padding: 0.7rem 0.8rem;
+      font-size: 0.78rem;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+      font-size: 0.72rem;
+    }
+
+    .stat-value {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .stat-sub {
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .hero-card-footer {
+      border-top: 1px dashed rgba(148, 163, 184, 0.3);
+      padding-top: 0.7rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.6rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* ─── Sections ───────────────────────────────────── */
+
+    section {
+      padding: 2.25rem 0 0;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 1.1rem;
+      gap: 0.5rem;
+    }
+
+    .section-heading h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .section-heading span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 1.75rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 1.1rem 1.15rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* ─── Skills ─────────────────────────────────────── */
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .pill {
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      font-size: 0.78rem;
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.95);
+    }
+
+    /* ─── Projects ───────────────────────────────────── */
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem 1.05rem 0.95rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.24), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+      pointer-events: none;
+    }
+
+    .project-card:hover {
+      transform: translateY(-3px) translateZ(0);
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.95);
+      border-color: rgba(96, 165, 250, 0.7);
+      background: #020617;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .project-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .badge {
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.95);
+      white-space: nowrap;
+    }
+
+    .project-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.35rem;
+    }
+
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding: 0.16rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px dashed rgba(148, 163, 184, 0.4);
+    }
+
+    /* ─── Experience / Education ────────────────────── */
+
+    .timeline {
+      display: grid;
+      gap: 0.75rem;
+      font-size: 0.86rem;
+    }
+
+    .timeline-item span {
+      display: block;
+    }
+
+    .timeline-role {
+      font-weight: 500;
+    }
+
+    .timeline-meta {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    /* ─── Architecture & Photo Project helpers ───────── */
+
+    .section-subtitle {
+      color: #9ca3af;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .project-highlights ul {
+      margin-left: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .photo-section-title {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .photo-card img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #1f2933;
+      display: block;
+    }
+
+    .photo-caption {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #d1d5db;
+    }
+
+    .architecture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .architecture-card {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem 1.05rem 0.95rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .architecture-card h3 {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .architecture-card ul {
+      margin-left: 1.1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      display: grid;
+      gap: 0.3rem;
+    }
+
+    /* ─── Contact ───────────────────────────────────── */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 1.75rem;
+    }
+
+    form {
+      display: grid;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      border-radius: 0.6rem;
+      border: 1px solid var(--border-subtle);
+      padding: 0.55rem 0.7rem;
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
+    }
+
+    input:focus, textarea:focus {
+      border-color: rgba(96, 165, 250, 0.85);
+      box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.6);
+      background: #020617;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .visitor-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      font-size: 0.78rem;
+      color: #bfdbfe;
+    }
+
+    /* ─── Footer ────────────────────────────────────── */
+
+    footer {
+      padding-top: 2.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* ─── Responsive ────────────────────────────────── */
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-card {
+        order: -1;
+      }
+      .grid-2,
+      .contact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      nav {
+        display: none; /* keep it simple on mobile for now */
+      }
+      .nav-inner {
+        justify-content: center;
+      }
+    }
   </style>
+
+  <!-- Visitor counter script (kept as-is, runs on DOMContentLoaded) -->
+  <script>
+    // 🔗 Your visitor counter API endpoint (GET /visitors)
+    const VISITOR_API_URL = "https://r8593qfl6l.execute-api.us-east-1.amazonaws.com/visitors";
+
+    // Update both counters on the page
+    function setVisitorCount(count) {
+      const el1 = document.getElementById("visitor-count");
+      const el2 = document.getElementById("visitor-count-secondary");
+      if (el1) el1.textContent = count;
+      if (el2) el2.textContent = count;
+    }
+
+    // Call your API Gateway + Lambda visitor counter
+    async function fetchVisitorCount() {
+      try {
+        const response = await fetch(VISITOR_API_URL, { method: "GET" });
+        const data = await response.json();
+        // Expecting { "count": 123 } from Lambda
+        const count = data.count ?? data.visits ?? data;
+        setVisitorCount(count);
+      } catch (err) {
+        console.error("Error fetching visitor count:", err);
+      }
+    }
+
+    // Smooth scrolling + fetch visitor count on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      // Smooth scrolling for nav links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+          const targetId = this.getAttribute("href").slice(1);
+          const target = document.getElementById(targetId);
+          if (!target) return;
+          e.preventDefault();
+          window.scrollTo({
+            top: target.offsetTop - 72,
+            behavior: "smooth"
+          });
+        });
+      });
+
+      // Fetch visitor count when page loads
+      fetchVisitorCount();
+    });
+  </script>
 </head>
+
 <body>
   <header>
-    <h1>Elijah Little</h1>
-    <p>Active-Duty Army (25B – Information Technology Specialist) | Cybersecurity & Cloud Enthusiast | Exploring AI</p>
-    <nav>
-      <a href="http://linkedin.com/in/elijah-little-672a0935a" target="_blank">LinkedIn</a>
-      <a href="https://github.com/YOUR-USERNAME" target="_blank">GitHub</a>
-    </nav>
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="brand-badge">EL</div>
+        <div>
+          <div>Elijah Little</div>
+          <div style="font-size:0.72rem; color:var(--muted);">Cloud &amp; AI Portfolio</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <h2>About Me</h2>
-    <p>
-      I’m an IT Specialist in the U.S. Army with hands-on experience in networking, system administration,
-      and cybersecurity. Currently pursuing a B.S. in Cybersecurity Technology at UMGC, while preparing for
-      a transition into the civilian tech sector with a focus on <strong>cloud infrastructure</strong>
-      and <strong>AI integration</strong>.
-    </p>
+  <main class="page">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="hero-text">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          <span>Active Duty 25B · Building in the Cloud</span>
+        </div>
 
-    <h2>Projects</h2>
+        <h1>Army IT Specialist&nbsp;→&nbsp;Cloud &amp; AI Engineer in Progress</h1>
 
-    <div class="project">
-      <h3>Cloud Resume Project</h3>
-      <p>
-        This website is my first step in building a cloud/AI-focused portfolio. Deployed initially using GitHub Pages,
-        I’ll be migrating it to AWS (S3 + CloudFront) and enhancing it with a serverless visitor counter
-        (AWS Lambda + DynamoDB).
-      </p>
-    </div>
+        <p class="hero-subtitle">
+          I'm <strong>Elijah Little</strong>, an active-duty U.S. Army 25B focused on
+          cybersecurity, cloud, and AI. I build hands-on projects in AWS to turn
+          my day-to-day IT work into deployable, production-style experience.
+        </p>
 
-    <div class="project">
-      <h3>AI Chatbot (Coming Soon)</h3>
-      <p>
-        A cloud-hosted chatbot using AWS Lex / Azure Bot Service to demonstrate natural language processing integration.
-      </p>
-    </div>
+        <div class="hero-tags">
+          <span class="hero-tag">AWS · S3 · CloudFront · Lambda · DynamoDB</span>
+          <span class="hero-tag">Python · APIs · Automation</span>
+          <span class="hero-tag">Cybersecurity · Networking</span>
+        </div>
 
-    <div class="project">
-      <h3>Image Recognition Web App (Planned)</h3>
-      <p>
-        Python + Flask app deployed in the cloud using AWS Rekognition to identify objects in uploaded images.
-      </p>
-    </div>
+        <div class="hero-actions">
+          <!-- Resume link still placeholder until you have a PDF URL -->
+          <a class="btn btn-primary" href="#" target="_blank" rel="noopener">
+            <span class="icon">⬇️</span>
+            <span>Download Resume (PDF)</span>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/FujimotoFC" target="_blank" rel="noopener">
+            <span class="icon">💻</span>
+            <span>View GitHub</span>
+          </a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/elijah-little-672a0935a/" target="_blank" rel="noopener">
+            <span class="icon">🔗</span>
+            <span>Connect on LinkedIn</span>
+          </a>
+        </div>
+      </div>
 
+      <aside class="hero-card" aria-label="Portfolio snapshot">
+        <div class="hero-card-header">
+          <div>
+            <div style="font-size:0.8rem; color:var(--muted);">Portfolio snapshot</div>
+            <div style="font-size:0.95rem; font-weight:600;">Cloud Resume Challenge</div>
+          </div>
+          <div class="hero-status-pill">
+            <span class="dot"></span>
+            <span>Live on AWS</span>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">Visitor counter</div>
+            <div class="stat-value" id="visitor-count">—</div>
+            <div class="stat-sub">Backed by Lambda &amp; DynamoDB</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Cloud stack</div>
+            <div class="stat-value">S3 + CloudFront</div>
+            <div class="stat-sub">Static hosting with HTTPS</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Automation</div>
+            <div class="stat-value">GitHub Actions</div>
+            <div class="stat-sub">CI/CD to S3 (coming soon)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Focus areas</div>
+            <div class="stat-value">Cloud · Sec · AI</div>
+            <div class="stat-sub">Transition-ready skillset</div>
+          </div>
+        </div>
+
+        <div class="hero-card-footer">
+          <div>
+            <div style="font-size:0.78rem;">Current mission</div>
+            <div style="font-size:0.78rem; color:var(--muted);">Production-style cloud portfolio while on active duty.</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.78rem;">Location</div>
+            <div style="font-size:0.78rem; color:var(--muted);">Fort Eustis · Virginia</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- About & Skills -->
+    <section id="about">
+      <div class="grid-2">
+        <div>
+          <div class="section-heading">
+            <h2>About</h2>
+            <span>Who I am &amp; what I’m building</span>
+          </div>
+
+          <div class="card">
+            <p class="muted">
+              I'm an <strong>Information Technology Specialist (25B)</strong> in the U.S. Army,
+              currently supporting communications and IT operations while I build a
+              transition-ready career in <strong>cloud engineering, cybersecurity, and AI-driven automation</strong>.
+            </p>
+            <br />
+            <p class="muted">
+              This portfolio is my lab: I deploy real infrastructure on AWS, automate tasks
+              with Python and APIs, and document everything so it translates directly into
+              <strong>resume-ready experience</strong> for civilian roles.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-heading">
+            <h2>Skills snapshot</h2>
+            <span>Growing cloud &amp; security toolkit</span>
+          </div>
+          <div class="card">
+            <div style="margin-bottom:0.65rem; font-size:0.82rem; color:var(--muted);">
+              Hands-on with these tools today, actively leveling them up through projects.
+            </div>
+            <div class="pill-list">
+              <span class="pill">AWS S3 / CloudFront</span>
+              <span class="pill">AWS Lambda</span>
+              <span class="pill">DynamoDB</span>
+              <span class="pill">API Gateway</span>
+              <span class="pill">Python</span>
+              <span class="pill">Linux &amp; CLI</span>
+              <span class="pill">Git &amp; GitHub</span>
+              <span class="pill">Networking fundamentals</span>
+              <span class="pill">Security-first mindset</span>
+              <span class="pill">Documentation &amp; SOPs</span>
+              <span class="pill">Customer / end-user support</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="section-heading" style="margin-top:2rem;">
+        <h2>Cloud projects</h2>
+        <span>Hands-on AWS work, not just theory</span>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-title-row">
+            <h3 class="project-title">Cloud Resume Challenge</h3>
+            <span class="badge">AWS · S3 · CloudFront · Lambda</span>
+          </div>
+          <p class="muted" style="font-size:0.86rem;">
+            Deployed this portfolio as a static site on S3 fronted by CloudFront with HTTPS.
+            Implemented a visitor counter using Lambda, DynamoDB, and API Gateway to simulate
+            a production-style serverless app.
+          </p>
+          <div class="project-meta">
+            Status: <strong>In progress</strong> · Expanding CI/CD and monitoring next.
+          </div>
+          <div class="project-links">
+            <a class="link-pill" href="https://www.elijahlittle.com" target="_blank" rel="noopener">
+              🌐 Live site
+            </a>
+            <a class="link-pill" href="https://github.com/FujimotoFC" target="_blank" rel="noopener">
+              📦 View source on GitHub
+            </a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-title-row">
+            <h3 class="project-title">Serverless Visitor Counter API</h3>
+            <span class="badge">Lambda · DynamoDB · API Gateway</span>
+          </div>
+          <p class="muted" style="font-size:0.86rem;">
+            Built a REST API endpoint that increments and returns a page view count stored in
+            DynamoDB. Designed for idempotency and security-focused defaults as I learn more
+            about API design and IAM permissions.
+          </p>
+          <div class="project-meta">
+            Status: <strong>Wiring front-end → API</strong>.
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-title-row">
+            <h3 class="project-title">Contact Form with SES (Planned)</h3>
+            <span class="badge">SES · Security · Spam-safe</span>
+          </div>
+          <p class="muted" style="font-size:0.86rem;">
+            Next iteration: move my contact form off basic email and into AWS SES, improving
+            deliverability, monitoring, and security so messages land where they should.
+          </p>
+          <div class="project-meta">
+            Status: <strong>Design phase</strong> · To be integrated into this site.
+          </div>
+        </article>
+      </div>
+
+      <div class="section-heading" style="margin-top:2.25rem;">
+        <h2>AI &amp; automation projects</h2>
+        <span>Using AI to work smarter</span>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-title-row">
+            <h3 class="project-title">AI-Assisted Study &amp; Lab Notes</h3>
+            <span class="badge">Python · Prompting</span>
+          </div>
+          <p class="muted" style="font-size:0.86rem;">
+            Used AI tools to generate, organize, and refine study notes for cybersecurity,
+            math, and cloud topics. Focused on building repeatable workflows, not shortcuts,
+            so I actually understand what I deploy.
+          </p>
+          <div class="project-meta">
+            Status: <strong>Ongoing</strong> · Forms the backbone of my documentation habits.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Architecture (added correctly in the BODY) -->
+    <section id="architecture">
+      <div class="section-heading" style="margin-top:2.25rem;">
+        <h2>How This Portfolio Is Built</h2>
+        <span>Real AWS infrastructure behind the UI</span>
+      </div>
+
+      <div class="muted" style="max-width: 46rem;">
+        This isn’t just a template site — it’s a hands-on cloud project that I use to practice real AWS skills.
+      </div>
+
+      <div class="architecture-grid">
+        <div class="architecture-card">
+          <h3>Frontend &amp; Hosting</h3>
+          <ul>
+            <li>Static site built with HTML, CSS, and vanilla JavaScript.</li>
+            <li>Hosted on <strong>Amazon S3</strong> as a static website.</li>
+            <li>Served globally through <strong>Amazon CloudFront</strong> for low-latency access.</li>
+            <li>Custom domain: <strong>www.elijahlittle.com</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="architecture-card">
+          <h3>Visitor Counter</h3>
+          <ul>
+            <li>Frontend calls an endpoint on <strong>API Gateway</strong>.</li>
+            <li><strong>AWS Lambda</strong> handles the request.</li>
+            <li>Visit counts stored and updated in <strong>Amazon DynamoDB</strong>.</li>
+            <li>Returns the latest visitor total to the UI.</li>
+          </ul>
+        </div>
+
+        <div class="architecture-card">
+          <h3>AI Portfolio Assistant</h3>
+          <ul>
+            <li>Floating chat UI built with JavaScript and custom styling.</li>
+            <li>Designed to answer questions about skills, projects, and Army IT background.</li>
+            <li>Currently powered by keyword logic (no external API dependency).</li>
+            <li>Future-ready for secure serverless AI integration.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Camp Humphreys (photo-based project section) -->
+    <section id="camp-humphreys">
+      <div class="section-heading" style="margin-top:2.25rem;">
+        <h2>Conference Room Network Buildout</h2>
+        <span>8th Army HQ · Camp Humphreys (Aug 2022 – Sep 2023)</span>
+      </div>
+
+      <div class="card">
+        <p class="muted">
+          Supported the design and buildout of conference rooms and collaboration spaces within a headquarters environment,
+          enabling reliable network connectivity and modern meeting capabilities for senior leadership. Work included structured
+          cabling, network stack installation, and integration of Cisco collaboration systems.
+        </p>
+
+        <div class="project-highlights" style="margin-top:0.9rem;">
+          <ul class="muted">
+            <li>Built and supported structured network stacks for conference room environments.</li>
+            <li>Routed and terminated Ethernet cabling through floors and walls for clean, secure installations.</li>
+            <li>Integrated conference room systems with Cisco Touch 10 controllers.</li>
+            <li>Tested connectivity, validated configurations, and supported end-user operations.</li>
+            <li>Improved reliability and usability of command-level collaboration spaces.</li>
+          </ul>
+        </div>
+
+        <h3 class="photo-section-title">Before &amp; After</h3>
+
+        <div class="photo-grid">
+          <div class="photo-card">
+            <img src="images/camp-humphreys-before-1.jpg" alt="Conference room before network buildout">
+            <p class="photo-caption"><strong>Before:</strong> Limited infrastructure and unstructured cabling.</p>
+          </div>
+
+          <div class="photo-card">
+            <img src="images/camp-humphreys-after-1.jpg" alt="Conference room after network buildout">
+            <p class="photo-caption"><strong>After:</strong> Structured cabling, network stack installed, and collaboration systems integrated.</p>
+          </div>
+
+          <div class="photo-card">
+            <img src="images/camp-humphreys-before-2.jpg" alt="Network stack before installation">
+            <p class="photo-caption"><strong>Before:</strong> No dedicated network stack or cable management.</p>
+          </div>
+
+          <div class="photo-card">
+            <img src="images/camp-humphreys-after-2.jpg" alt="Completed network stack installation">
+            <p class="photo-caption"><strong>After:</strong> Completed network stack with routed cabling and validated connectivity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience & Education -->
+    <section id="experience">
+      <div class="grid-2" style="margin-top:2.3rem;">
+        <div>
+          <div class="section-heading">
+            <h2>Experience</h2>
+            <span>Army IT · Real responsibility</span>
+          </div>
+          <div class="card">
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="timeline-role">Information Technology Specialist (25B)</span>
+                <span class="timeline-meta">U.S. Army · 2021 – Present · Fort Eustis, VA</span>
+                <span class="muted">
+                  Support communications and IT operations, helpdesk support, user account
+                  management, troubleshooting, and secure configuration — while building
+                  cloud and cybersecurity skills on and off duty.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-heading">
+            <h2>Education &amp; Certifications</h2>
+            <span>Stacking credentials over time</span>
+          </div>
+          <div class="card">
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="timeline-role">B.S. Cybersecurity Technology (in progress)</span>
+                <span class="timeline-meta">University of Maryland Global Campus</span>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-role">A.S. General / Computer Studies (in progress)</span>
+                <span class="timeline-meta">UMGC</span>
+              </div>
+              <div class="timeline-item">
+                <span class="timeline-role">Certifications</span>
+                <span class="muted">
+                  <div class="cert-card">
+  <h3>CompTIA Security+ (SY0-701)</h3>
+  <p class="cert-meta">Certified June 2026 · Valid through June 2029</p>
+  <p>
+    Validates hands-on skills in threats &amp; vulnerabilities, secure
+    architecture, IAM, and incident response — formalizing the
+    security-first practices demonstrated throughout this portfolio.
+  </p>
+  <div
+    data-iframe-width="150"
+    data-iframe-height="270"
+    data-share-badge-id="317bac5d-55cf-4636-8b72-83f3425e7ea5"
+    data-share-badge-host="https://www.credly.com"></div>
+</div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" style="margin-top:2.5rem;">
+      <div class="section-heading">
+        <h2>Contact</h2>
+        <span>Let’s talk cloud, security, or transition</span>
+      </div>
+
+      <div class="contact-grid">
+        <div class="card">
+          <form id="contact-form" method="post" action="#">
+            <!-- Replace action with your API Gateway/SES endpoint later -->
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" placeholder="Your name" required />
+            </div>
+
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+
+            <div>
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="How can I help?"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width:fit-content; margin-top:0.4rem;">
+              <span class="icon">📨</span>
+              <span>Send message</span>
+            </button>
+
+            <div class="contact-note">
+              This form will be backed by a secure AWS SES workflow, so messages actually reach my inbox
+              instead of getting lost in spam.
+            </div>
+          </form>
+        </div>
+
+        <div class="card">
+          <p class="muted">
+            If you’re a recruiter, hiring manager, or mentor in cloud / cybersecurity, I’m always open to:
+          </p>
+          <ul class="muted" style="margin:0.75rem 0 0.75rem 1.1rem; font-size:0.88rem;">
+            <li>Feedback on this portfolio</li>
+            <li>Advice on breaking into cloud / security roles</li>
+            <li>Potential internships, apprenticeships, or junior roles</li>
+          </ul>
+
+          <p class="muted" style="margin-bottom:0.75rem;">
+            You can also reach me directly via email or LinkedIn if that’s easier for you.
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:0.4rem; font-size:0.86rem;">
+            <div>📧 <span class="muted">littlebizconnection@gmail.com</span></div>
+            <div>🔗 <span class="muted">LinkedIn:
+              <span style="text-decoration:underline;">
+                https://www.linkedin.com/in/elijah-little-672a0935a/
+              </span>
+            </span></div>
+          </div>
+
+          <div style="margin-top:1rem;">
+            <span class="visitor-chip">
+              👀 Visitors:&nbsp;<strong id="visitor-count-secondary">—</strong>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Elijah Little. All rights reserved.</div>
+      <div>Built on AWS · Designed as a living portfolio, not a one-time project.</div>
+    </footer>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Elijah Little · Portfolio in Progress</p>
-  </footer>
+  <!-- Elijah AI Portfolio Assistant – Chat Bubble + Panel -->
+  <div id="elijah-chat-root">
+    <!-- Floating chat button -->
+    <button
+      id="chat-toggle"
+      aria-label="Open Elijah's AI assistant"
+      style="
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        border-radius: 999px;
+        border: none;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.8);
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 50;
+      "
+    >
+      💬
+    </button>
+
+    <!-- Chat panel -->
+    <div
+      id="chat-panel"
+      style="
+        position: fixed;
+        bottom: 90px;
+        right: 20px;
+        width: 320px;
+        max-height: 420px;
+        background: #020617;
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        box-shadow: 0 22px 50px rgba(15, 23, 42, 0.9);
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+        z-index: 50;
+      "
+    >
+      <!-- Header -->
+      <div
+        style="
+          padding: 0.75rem 0.9rem;
+          background: linear-gradient(135deg, #1f2937, #0f172a);
+          border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        "
+      >
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <div
+            style="
+              width: 28px;
+              height: 28px;
+              border-radius: 999px;
+              background: radial-gradient(circle at 30% 30%, #60a5fa, #1d4ed8);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 0.8rem;
+              font-weight: 600;
+            "
+          >
+            EL
+          </div>
+          <div>
+            <div style="font-size: 0.85rem; font-weight: 600;">Elijah's AI Assistant</div>
+            <div style="font-size: 0.7rem; color: #9ca3af;">
+              Ask about his skills, projects, and Army IT experience.
+            </div>
+          </div>
+        </div>
+        <button
+          id="chat-close"
+          aria-label="Close chat"
+          style="
+            border: none;
+            background: transparent;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 16px;
+          "
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Messages -->
+      <div
+        id="chat-messages"
+        style="
+          flex: 1;
+          padding: 0.75rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          overflow-y: auto;
+          font-size: 0.8rem;
+        "
+      >
+        <div
+          style="
+            align-self: flex-start;
+            max-width: 85%;
+            padding: 0.55rem 0.7rem;
+            border-radius: 12px;
+            background: #111827;
+            color: #e5e7eb;
+          "
+        >
+          Hey, I’m Elijah’s AI portfolio assistant. Ask me about his skills, projects, Army 25B experience, or
+          career goals.
+        </div>
+
+        <div
+          style="
+            align-self: flex-start;
+            max-width: 85%;
+            padding: 0.45rem 0.6rem;
+            border-radius: 12px;
+            background: #020617;
+            border: 1px dashed rgba(148, 163, 184, 0.6);
+            color: #9ca3af;
+          "
+        >
+          Try: “What cloud projects has Elijah built?” or “Tell me about his Army IT experience.”
+        </div>
+      </div>
+
+      <!-- Input -->
+      <form
+        id="chat-form"
+        style="
+          padding: 0.6rem 0.7rem;
+          border-top: 1px solid rgba(30, 64, 175, 0.6);
+          background: #020617;
+          display: flex;
+          gap: 0.4rem;
+          align-items: center;
+        "
+      >
+        <input
+          id="chat-input"
+          type="text"
+          placeholder="Ask about Elijah's skills or projects…"
+          autocomplete="off"
+          style="
+            flex: 1;
+            padding: 0.45rem 0.55rem;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            background: #020617;
+            color: #e5e7eb;
+            font-size: 0.8rem;
+          "
+        />
+        <button
+          type="submit"
+          style="
+            border-radius: 999px;
+            border: none;
+            padding: 0.4rem 0.7rem;
+            background: #3b82f6;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+          "
+        >
+          ➤
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chat logic script (kept as-is) -->
+  <script>
+    (function () {
+      const chatToggle = document.getElementById("chat-toggle");
+      const chatPanel = document.getElementById("chat-panel");
+      const chatClose = document.getElementById("chat-close");
+      const chatForm = document.getElementById("chat-form");
+      const chatInput = document.getElementById("chat-input");
+      const chatMessages = document.getElementById("chat-messages");
+
+      if (!chatToggle || !chatPanel || !chatForm || !chatInput || !chatMessages) {
+        console.warn("Chat elements not found on page.");
+        return;
+      }
+
+      function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function addMessage(text, sender) {
+        const bubble = document.createElement("div");
+        bubble.textContent = text;
+
+        const baseStyle = `
+          max-width: 85%;
+          padding: 0.55rem 0.7rem;
+          border-radius: 12px;
+          margin-top: 0.2rem;
+          font-size: 0.8rem;
+          white-space: pre-wrap;
+        `;
+
+        if (sender === "user") {
+          bubble.style.cssText = baseStyle + `
+            align-self: flex-end;
+            background: #1d4ed8;
+            color: #e5e7eb;
+          `;
+        } else {
+          bubble.style.cssText = baseStyle + `
+            align-self: flex-start;
+            background: #111827;
+            color: #e5e7eb;
+          `;
+        }
+
+        chatMessages.appendChild(bubble);
+        scrollToBottom();
+      }
+
+      function fakeAssistantReply(userText) {
+        const lower = userText.toLowerCase();
+        let reply;
+
+        if (lower.includes("project") || lower.includes("cloud resume")) {
+          reply =
+            "Elijah deployed this site using AWS S3 + CloudFront, and built a visitor counter using Lambda, DynamoDB, and API Gateway. " +
+            "He treats this portfolio as a live lab where he keeps improving his cloud skills.";
+        } else if (lower.includes("army") || lower.includes("25b") || lower.includes("mos")) {
+          reply =
+            "Elijah is an active-duty 25B (Information Technology Specialist). He supports communications and IT operations at Fort Eustis, " +
+            "gaining real-world troubleshooting, user support, and secure systems experience.";
+        } else if (lower.includes("skills") || lower.includes("what can he do") || lower.includes("tech stack")) {
+          reply =
+            "Key skills: AWS (S3, CloudFront, Lambda, DynamoDB, API Gateway), basic Python, troubleshooting from his Army IT role, and a focus on cloud + cybersecurity.";
+        } else if (lower.includes("goal") || lower.includes("career") || lower.includes("future")) {
+          reply =
+            "Elijah’s goal is to transition from the Army into a cloud or security-focused IT role, leveraging his hands-on AWS portfolio and cybersecurity studies at UMGC.";
+        } else if (lower.includes("contact") || lower.includes("email") || lower.includes("linkedin")) {
+          reply =
+            "You can reach Elijah at littlebizconnection@gmail.com or connect on LinkedIn: linkedin.com/in/elijah-little-672a0935a/.";
+        } else {
+          reply =
+            "I can answer questions about Elijah’s skills, projects, Army IT experience, and career goals. " +
+            "Try asking: “What cloud projects has Elijah built?” or “What does he do as a 25B in the Army?”";
+        }
+
+        addMessage(reply, "assistant");
+      }
+
+      chatToggle.addEventListener("click", () => {
+        const isOpen = chatPanel.style.display === "flex";
+        chatPanel.style.display = isOpen ? "none" : "flex";
+        if (!isOpen) {
+          scrollToBottom();
+          chatInput.focus();
+        }
+      });
+
+      chatClose.addEventListener("click", () => {
+        chatPanel.style.display = "none";
+      });
+
+      chatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        addMessage(text, "user");
+        chatInput.value = "";
+        fakeAssistantReply(text);
+      });
+    })();
+  </script>
+
+  <script>
+    // Footer year only
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+<script type="text/javascript" async src="https://cdn.credly.com/assets/utilities/embed.js"></script>
 </body>
 </html>
