@@ -721,19 +721,19 @@
 
         <p class="hero-subtitle">
           I'm <strong>Elijah Little</strong>, an active-duty U.S. Army 25B focused on
-          cybersecurity, cloud, and AI. I build hands-on projects in AWS to turn
+          cybersecurity, cloud, and AI. I build hands-on projects in AWS and Kubernetes to turn
           my day-to-day IT work into deployable, production-style experience.
         </p>
 
         <div class="hero-tags">
-          <span class="hero-tag">AWS · S3 · CloudFront · Lambda · DynamoDB</span>
+          <span class="hero-tag">AWS · Kubernetes · GitOps · Docker</span>
           <span class="hero-tag">Python · APIs · Automation</span>
           <span class="hero-tag">Cybersecurity · Networking</span>
         </div>
 
         <div class="hero-actions">
-          <!-- Resume link still placeholder until you have a PDF URL -->
-          <a class="btn btn-primary" href="#" target="_blank" rel="noopener">
+          <!-- Resume PDF (lives at bucket root next to index.html) -->
+          <a class="btn btn-primary" href="Elijah_Little_Resume.pdf" target="_blank" rel="noopener">
             <span class="icon">⬇️</span>
             <span>Download Resume (PDF)</span>
           </a>
@@ -772,9 +772,9 @@
             <div class="stat-sub">Static hosting with HTTPS</div>
           </div>
           <div class="stat-card">
-            <div class="stat-label">Automation</div>
-            <div class="stat-value">GitHub Actions</div>
-            <div class="stat-sub">CI/CD to S3 (coming soon)</div>
+            <div class="stat-label">Platform project</div>
+            <div class="stat-value">K8s + GitOps</div>
+            <div class="stat-sub">Argo CD · Kyverno</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Focus areas</div>
@@ -813,7 +813,8 @@
             </p>
             <br />
             <p class="muted">
-              This portfolio is my lab: I deploy real infrastructure on AWS, automate tasks
+              This portfolio is my lab: I deploy real infrastructure on AWS, run a
+              Kubernetes-based Internal Developer Platform with GitOps, automate tasks
               with Python and APIs, and document everything so it translates directly into
               <strong>resume-ready experience</strong> for civilian roles.
             </p>
@@ -834,6 +835,11 @@
               <span class="pill">AWS Lambda</span>
               <span class="pill">DynamoDB</span>
               <span class="pill">API Gateway</span>
+              <span class="pill">Kubernetes</span>
+              <span class="pill">GitOps (Argo CD)</span>
+              <span class="pill">Kyverno / policy-as-code</span>
+              <span class="pill">Helm</span>
+              <span class="pill">Docker</span>
               <span class="pill">Python</span>
               <span class="pill">Linux &amp; CLI</span>
               <span class="pill">Git &amp; GitHub</span>
@@ -851,10 +857,36 @@
     <section id="projects">
       <div class="section-heading" style="margin-top:2rem;">
         <h2>Cloud projects</h2>
-        <span>Hands-on AWS work, not just theory</span>
+        <span>Hands-on AWS &amp; Kubernetes work, not just theory</span>
       </div>
 
       <div class="project-grid">
+        <article class="project-card">
+          <div class="project-title-row">
+            <h3 class="project-title">Internal Developer Platform (Kubernetes + GitOps)</h3>
+            <span class="badge">Kubernetes · Argo CD · Kyverno · Helm</span>
+          </div>
+          <p class="muted" style="font-size:0.86rem;">
+            Built a platform where developers deploy by pushing to Git — Argo CD reconciles
+            the cluster automatically, with self-healing that reverts manual drift. Enforced
+            security policy-as-code with Kyverno: workloads without CPU/memory limits are
+            rejected at admission, not flagged after. Rolled the policy out Audit→Enforce and
+            scoped it to application namespaces.
+          </p>
+          <div class="project-meta">
+            Status: <strong>Core platform complete</strong> · GitOps delivery, self-healing,
+            policy enforcement. Observability &amp; multi-env promotion planned.
+          </div>
+          <div class="project-links">
+            <a class="link-pill" href="https://github.com/FujimotoFC/idp-platform" target="_blank" rel="noopener">
+              📦 idp-platform
+            </a>
+            <a class="link-pill" href="https://github.com/FujimotoFC/idp-service-template" target="_blank" rel="noopener">
+              📦 service-template
+            </a>
+          </div>
+        </article>
+
         <article class="project-card">
           <div class="project-title-row">
             <h3 class="project-title">Cloud Resume Challenge</h3>
@@ -928,6 +960,51 @@
             Status: <strong>Ongoing</strong> · Forms the backbone of my documentation habits.
           </div>
         </article>
+      </div>
+    </section>
+
+    <!-- IDP Architecture -->
+    <section id="idp-architecture">
+      <div class="section-heading" style="margin-top:2.25rem;">
+        <h2>How the Developer Platform Works</h2>
+        <span>Kubernetes · GitOps · policy-as-code</span>
+      </div>
+
+      <div class="muted" style="max-width: 46rem;">
+        An Internal Developer Platform (IDP) I built to practice production-style platform
+        engineering: developers ship by committing to Git, and the platform handles delivery
+        and enforces standards automatically.
+      </div>
+
+      <div class="architecture-grid">
+        <div class="architecture-card">
+          <h3>GitOps Delivery</h3>
+          <ul>
+            <li>Git is the source of truth — a <strong>git push</strong> is the deployment.</li>
+            <li><strong>Argo CD</strong> watches the repos and reconciles the cluster to match.</li>
+            <li>No manual <code>kubectl apply</code> in the normal workflow.</li>
+            <li>Runs on Kubernetes (kind, v1.32).</li>
+          </ul>
+        </div>
+
+        <div class="architecture-card">
+          <h3>Self-Healing</h3>
+          <ul>
+            <li>Manual changes to live resources are auto-reverted to match Git.</li>
+            <li>Prevents configuration drift between cluster and repo.</li>
+            <li>Verified by scaling a workload by hand and watching it snap back.</li>
+          </ul>
+        </div>
+
+        <div class="architecture-card">
+          <h3>Security Guardrails</h3>
+          <ul>
+            <li><strong>Kyverno</strong> enforces policy-as-code at admission.</li>
+            <li>Workloads without CPU/memory limits are rejected before creation.</li>
+            <li>Rolled out Audit → Enforce; scoped to application namespaces.</li>
+            <li>Golden-path service template keeps new services compliant by default.</li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -1078,6 +1155,19 @@
     data-iframe-width="150"
     data-iframe-height="270"
     data-share-badge-id="317bac5d-55cf-4636-8b72-83f3425e7ea5"
+    data-share-badge-host="https://www.credly.com"></div>
+</div>
+                  <div class="cert-card">
+  <h3>IBM Cybersecurity Fundamentals</h3>
+  <p class="cert-meta">Issued by IBM · Verified on Credly</p>
+  <p>
+    Foundational credential covering core cybersecurity concepts, common
+    threats, and defensive practices.
+  </p>
+  <div
+    data-iframe-width="150"
+    data-iframe-height="270"
+    data-share-badge-id="772e1edc-115f-4a5d-b122-035626e33e14"
     data-share-badge-host="https://www.credly.com"></div>
 </div>
                 </span>
@@ -1344,7 +1434,7 @@
     </div>
   </div>
 
-  <!-- Chat logic script (kept as-is) -->
+  <!-- Chat logic script (kept as-is, with IDP answers added) -->
   <script>
     (function () {
       const chatToggle = document.getElementById("chat-toggle");
@@ -1398,27 +1488,29 @@
         const lower = userText.toLowerCase();
         let reply;
 
-        if (lower.includes("project") || lower.includes("cloud resume")) {
+        if (lower.includes("idp") || lower.includes("kubernetes") || lower.includes("platform") || lower.includes("gitops") || lower.includes("argo") || lower.includes("kyverno")) {
           reply =
-            "Elijah deployed this site using AWS S3 + CloudFront, and built a visitor counter using Lambda, DynamoDB, and API Gateway. " +
-            "He treats this portfolio as a live lab where he keeps improving his cloud skills.";
+            "Elijah built an Internal Developer Platform on Kubernetes: developers deploy by pushing to Git, Argo CD reconciles the cluster (with self-healing), and Kyverno enforces security policy-as-code — blocking workloads without resource limits at admission. Repos are on his GitHub under idp-platform and idp-service-template.";
+        } else if (lower.includes("project") || lower.includes("cloud resume")) {
+          reply =
+            "Elijah deployed this site using AWS S3 + CloudFront, and built a visitor counter using Lambda, DynamoDB, and API Gateway. He also built a Kubernetes + GitOps Internal Developer Platform — ask me about the IDP for details.";
         } else if (lower.includes("army") || lower.includes("25b") || lower.includes("mos")) {
           reply =
             "Elijah is an active-duty 25B (Information Technology Specialist). He supports communications and IT operations at Fort Eustis, " +
             "gaining real-world troubleshooting, user support, and secure systems experience.";
         } else if (lower.includes("skills") || lower.includes("what can he do") || lower.includes("tech stack")) {
           reply =
-            "Key skills: AWS (S3, CloudFront, Lambda, DynamoDB, API Gateway), basic Python, troubleshooting from his Army IT role, and a focus on cloud + cybersecurity.";
+            "Key skills: AWS (S3, CloudFront, Lambda, DynamoDB, API Gateway), Kubernetes, GitOps with Argo CD, Kyverno policy-as-code, Helm, Docker, Python, and troubleshooting from his Army IT role — with a focus on cloud + cybersecurity.";
         } else if (lower.includes("goal") || lower.includes("career") || lower.includes("future")) {
           reply =
-            "Elijah’s goal is to transition from the Army into a cloud or security-focused IT role, leveraging his hands-on AWS portfolio and cybersecurity studies at UMGC.";
+            "Elijah’s goal is to transition from the Army into a cloud, platform, or security-focused role, leveraging his hands-on AWS and Kubernetes portfolio and cybersecurity studies at UMGC.";
         } else if (lower.includes("contact") || lower.includes("email") || lower.includes("linkedin")) {
           reply =
             "You can reach Elijah at littlebizconnection@gmail.com or connect on LinkedIn: linkedin.com/in/elijah-little-672a0935a/.";
         } else {
           reply =
-            "I can answer questions about Elijah’s skills, projects, Army IT experience, and career goals. " +
-            "Try asking: “What cloud projects has Elijah built?” or “What does he do as a 25B in the Army?”";
+            "I can answer questions about Elijah’s skills, projects (including his Kubernetes + GitOps platform), Army IT experience, and career goals. " +
+            "Try asking: “Tell me about the IDP” or “What does he do as a 25B in the Army?”";
         }
 
         addMessage(reply, "assistant");
