@@ -639,6 +639,166 @@
         justify-content: center;
       }
     }
+
+    /* ─── Lab walkthrough slideshow ──────────────────── */
+
+    .lab-viewer {
+      margin: auto;
+      width: min(1100px, 94vw);
+      max-height: 94vh;
+      padding: 0;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      background: var(--bg-alt);
+      color: var(--text);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .lab-viewer::backdrop {
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(4px);
+    }
+
+    .lab-viewer[open] {
+      animation: lab-open 200ms ease-out;
+    }
+
+    @keyframes lab-open {
+      from { opacity: 0; transform: scale(0.97); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .lab-viewer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.85rem;
+    }
+
+    .lab-viewer-count {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .lab-stage {
+      position: relative;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: min(62vh, 620px);
+    }
+
+    .lab-stage img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .lab-stage img[hidden],
+    .lab-missing[hidden] {
+      display: none;
+    }
+
+    .lab-missing {
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .lab-nav,
+    .lab-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-subtle);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text);
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .lab-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 999px;
+      font-size: 1.3rem;
+    }
+
+    .lab-nav:hover,
+    .lab-close:hover {
+      background: rgba(15, 23, 42, 1);
+      border-color: rgba(96, 165, 250, 0.7);
+    }
+
+    .lab-nav:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    .lab-prev { left: 0.75rem; }
+    .lab-next { right: 0.75rem; }
+
+    .lab-close {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      font-size: 1rem;
+    }
+
+    .lab-nav:focus-visible,
+    .lab-close:focus-visible,
+    .lab-open-btn:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .lab-caption {
+      padding: 0.9rem 1.1rem 1rem;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      max-width: 72ch;
+      min-height: 4.2rem;
+    }
+
+    .lab-progress {
+      display: flex;
+      gap: 4px;
+      padding: 0 1.1rem 1rem;
+    }
+
+    .lab-progress span {
+      flex: 1;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--border-subtle);
+    }
+
+    .lab-progress span.active {
+      background: var(--accent);
+    }
+
+    .lab-open-btn {
+      width: fit-content;
+      margin-top: 0.35rem;
+    }
+
+    @media (max-width: 640px) {
+      .lab-stage { height: 45vh; }
+      .lab-nav { width: 2.3rem; height: 2.3rem; font-size: 1.1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lab-viewer[open] { animation: none; }
+    }
   </style>
 
   <!-- Visitor counter script (kept as-is, runs on DOMContentLoaded) -->
@@ -854,6 +1014,55 @@
     </section>
 
     <!-- Projects -->
+    <!-- Security projects -->
+    <section id="security-projects">
+      <div class="section-heading" style="margin-top:2rem;">
+        <h2>Security projects</h2>
+        <span>Building the skills a SOC analyst uses every day</span>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card">
+          <div class="project-title-row">
+            <h3 class="project-title">SOC Home Lab</h3>
+            <span class="badge">VMware · Kali · Ubuntu · Windows Server</span>
+          </div>
+          <p class="muted" style="font-size:0.86rem;">
+            An isolated lab where I attack my own machines and practice catching it. Three
+            virtual machines on a host-only network: Kali Linux as the attacker, Ubuntu as the
+            future Splunk server, and Windows Server as the future domain controller.
+          </p>
+          <div class="project-meta">
+            Status: <strong>Network built</strong> · Splunk, Active Directory, and detections next.
+          </div>
+          <button type="button" class="btn btn-primary lab-open-btn" id="lab-open">
+            View lab walkthrough
+          </button>
+          <div class="project-links">
+            <a class="link-pill" href="https://github.com/FujimotoFC/cyber-home-lab" target="_blank" rel="noopener">
+              📦 cyber-home-lab
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Lab walkthrough slideshow (opens over the page) -->
+    <dialog class="lab-viewer" id="lab-viewer" aria-label="SOC home lab walkthrough">
+      <div class="lab-viewer-top">
+        <span class="lab-viewer-count" id="lab-count">1 / 1</span>
+        <button type="button" class="lab-close" id="lab-close" aria-label="Close walkthrough">✕</button>
+      </div>
+      <div class="lab-stage" id="lab-stage">
+        <img id="lab-img" alt="">
+        <div class="lab-missing" id="lab-missing" hidden>Screenshot coming soon.</div>
+        <button type="button" class="lab-nav lab-prev" id="lab-prev" aria-label="Previous screenshot">‹</button>
+        <button type="button" class="lab-nav lab-next" id="lab-next" aria-label="Next screenshot">›</button>
+      </div>
+      <p class="lab-caption" id="lab-caption"></p>
+      <div class="lab-progress" id="lab-progress" aria-hidden="true"></div>
+    </dialog>
+
     <section id="projects">
       <div class="section-heading" style="margin-top:2rem;">
         <h2>Cloud projects</h2>
@@ -1546,5 +1755,77 @@
     document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 <script type="text/javascript" async src="https://cdn.credly.com/assets/utilities/embed.js"></script>
+  <script>
+    /* SOC home lab walkthrough.
+       To add a screenshot: upload it to images/ in S3, then add one line below. */
+    (function () {
+      const slides = [
+        { src: "images/soc-lab-01.jpg", caption: "Three virtual machines in VMware Workstation: Kali Linux (attacker), Ubuntu (future Splunk server), and Windows Server (future domain controller). Here Kali runs ip a to find its lab address, 192.168.96.130." },
+        { src: "images/soc-lab-02.jpg", caption: "Kali's network settings. The main adapter is host-only, a private network shared only with the other lab VMs and my laptop. A second NAT adapter gives Kali internet access for installing tools." },
+        { src: "images/soc-lab-03.jpg", caption: "Testing connectivity: Kali pings Ubuntu at 192.168.96.129 with 0% packet loss. My first attempts failed because of one mistyped digit in the IP address, a lesson in checking details." },
+        { src: "images/soc-lab-04.jpg", caption: "SSH from Kali into Ubuntu. The login banner confirms the session came from Kali's address, 192.168.96.130: the first remote session between machines in the lab." },
+        { src: "images/soc-lab-05.jpg", caption: "Windows Server 2025 up and running. Next step: promote it to an Active Directory domain controller so the lab has real user accounts to attack and monitor." }
+      ];
+
+      const viewer = document.getElementById("lab-viewer");
+      if (!viewer || !slides.length) return;
+
+      const img = document.getElementById("lab-img");
+      const missing = document.getElementById("lab-missing");
+      const caption = document.getElementById("lab-caption");
+      const count = document.getElementById("lab-count");
+      const prev = document.getElementById("lab-prev");
+      const next = document.getElementById("lab-next");
+      const progress = document.getElementById("lab-progress");
+      let index = 0;
+
+      progress.innerHTML = slides.map(() => "<span></span>").join("");
+      const bars = progress.querySelectorAll("span");
+
+      function show(i) {
+        index = Math.max(0, Math.min(slides.length - 1, i));
+        const slide = slides[index];
+        missing.hidden = true;
+        img.hidden = false;
+        img.src = slide.src;
+        img.alt = slide.caption;
+        caption.textContent = slide.caption;
+        count.textContent = (index + 1) + " / " + slides.length;
+        prev.disabled = index === 0;
+        next.disabled = index === slides.length - 1;
+        bars.forEach((b, n) => b.classList.toggle("active", n === index));
+      }
+
+      img.addEventListener("error", () => { img.hidden = true; missing.hidden = false; });
+
+      document.getElementById("lab-open").addEventListener("click", () => {
+        show(0);
+        viewer.showModal();
+      });
+      document.getElementById("lab-close").addEventListener("click", () => viewer.close());
+      prev.addEventListener("click", () => show(index - 1));
+      next.addEventListener("click", () => show(index + 1));
+
+      // Click the dark area outside the box to close
+      viewer.addEventListener("click", (e) => { if (e.target === viewer) viewer.close(); });
+
+      // Arrow keys (Esc closes automatically)
+      viewer.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") show(index + 1);
+        if (e.key === "ArrowLeft") show(index - 1);
+      });
+
+      // Swipe on phones
+      let startX = null;
+      const stage = document.getElementById("lab-stage");
+      stage.addEventListener("touchstart", (e) => { startX = e.touches[0].clientX; }, { passive: true });
+      stage.addEventListener("touchend", (e) => {
+        if (startX === null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
+        startX = null;
+      });
+    })();
+  </script>
 </body>
 </html>
