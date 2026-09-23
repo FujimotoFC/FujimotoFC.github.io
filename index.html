@@ -378,6 +378,15 @@
       gap: 1.25rem;
     }
 
+    /* Security projects holds a single card for now; auto-fit would stretch it
+       across the full row. Cap and centre it, per card, so it still works
+       once a second card is added. */
+    #security-projects .project-card {
+      max-width: 620px;
+      margin-inline: auto;
+      width: 100%;
+    }
+
     .project-card {
       background: var(--card);
       border-radius: var(--radius-lg);
