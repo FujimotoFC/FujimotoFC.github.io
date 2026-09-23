@@ -664,7 +664,6 @@
     /* ─── Lab walkthrough slideshow ──────────────────── */
 
     .lab-viewer {
-      margin: auto;
       width: min(1100px, 94vw);
       max-height: 94vh;
       padding: 0;
@@ -718,11 +717,6 @@
       max-height: 100%;
       object-fit: contain;
       display: block;
-    }
-
-    .lab-stage img[hidden],
-    .lab-missing[hidden] {
-      display: none;
     }
 
     .lab-missing {
@@ -1054,7 +1048,7 @@
             future Splunk server, and Windows Server as the future domain controller.
           </p>
           <div class="project-meta">
-            Status: <strong>Network built</strong> · Splunk, Active Directory, and detections next.
+            Status: <strong>Hardening and detection</strong> · Splunk and Active Directory next.
           </div>
           <button type="button" class="btn btn-primary lab-open-btn" id="lab-open">
             View lab walkthrough
@@ -1811,7 +1805,12 @@
         { src: "images/soc-lab-02.jpg", caption: "Kali's network settings. The main adapter is host-only, a private network shared only with the other lab VMs and my laptop. A second NAT adapter gives Kali internet access for installing tools." },
         { src: "images/soc-lab-03.jpg", caption: "Testing connectivity: Kali pings Ubuntu at 192.168.96.129 with 0% packet loss. My first attempts failed because of one mistyped digit in the IP address, a lesson in checking details." },
         { src: "images/soc-lab-04.jpg", caption: "SSH from Kali into Ubuntu. The login banner confirms the session came from Kali's address, 192.168.96.130: the first remote session between machines in the lab." },
-        { src: "images/soc-lab-05.jpg", caption: "Windows Server 2025 up and running. Next step: promote it to an Active Directory domain controller so the lab has real user accounts to attack and monitor." }
+        { src: "images/soc-lab-05.jpg", caption: "Windows Server 2025 up and running. Next step: promote it to an Active Directory domain controller so the lab has real user accounts to attack and monitor." },
+        { src: "images/soc-lab-06.jpg", caption: "Hardening SSH on the Ubuntu server. Setting PasswordAuthentication to no appeared to do nothing, so I checked the running config with sshd -T and found a cloud-init drop-in file was being read first. SSH keeps the first value it sees, so renaming my file to 01-hardening.conf put it earlier in the load order and the setting finally took." },
+        { src: "images/soc-lab-07.jpg", caption: "The host firewall (UFW) allows only SSH on port 22 and denies everything else coming in. The kernel log below it shows repeated attempts to reach port 80 from Kali at 192.168.96.130, each one dropped." },
+        { src: "images/soc-lab-08.jpg", caption: "Attacking from Kali: repeated SSH logins as a user that does not exist. The first attempts are refused by the hardened config, and the later ones return Connection refused because the server has already blocked the address." },
+        { src: "images/soc-lab-09.jpg", caption: "Detection on the Ubuntu side: filtering the SSH journal for failed password attempts shows three in fifteen seconds, all from Kali at 192.168.96.130. In MITRE ATT&CK terms this is T1110, brute force." },
+        { src: "images/soc-lab-10.jpg", caption: "Automated containment: fail2ban watches the SSH log and bans an address after five failures. Here it has banned 192.168.96.130. I also released the ban with unbanip, the same step used to clear a false positive on a real network." }
       ];
 
       const viewer = document.getElementById("lab-viewer");
